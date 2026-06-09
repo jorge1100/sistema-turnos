@@ -5,77 +5,110 @@ namespace App\Http\Controllers;
 use App\Models\Turno;
 use App\Models\Servicio;
 use App\Models\Caja;
-use App\Models\Historial;
 use Illuminate\Http\Request;
 
 class TurnoController extends Controller
 {
     public function index()
     {
-        $turnos = Turno::with(['servicio', 'caja'])->get();
+        $turnos = auth()->user()
+            ->turnos()
+            ->with(['servicio', 'caja'])
+            ->orderByRaw("
+                CASE 
+                    WHEN estado = 'pendiente' THEN 1
+                    WHEN estado = 'en_atencion' THEN 2
+                    WHEN estado = 'atendido' THEN 3
+                    ELSE 4
+                END
+            ")
+            ->orderByDesc('fecha')
+            ->get();
+
         return view('turnos.index', compact('turnos'));
     }
 
     public function create()
     {
         $servicios = Servicio::all();
-        $cajas = Caja::all();
-        return view('turnos.create', compact('servicios', 'cajas'));
+        return view('turnos.create', compact('servicios'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'servicio_id' => 'required',
+            'nombre' => 'required'
         ]);
 
         $ultimo = Turno::latest()->first();
         $numero = $ultimo ? $ultimo->id + 1 : 1;
 
-        $turno = Turno::create([
+        Turno::create([
             'numero' => 'T' . str_pad($numero, 3, '0', STR_PAD_LEFT),
             'fecha' => now(),
             'estado' => 'pendiente',
-            'user_id' => 1, // después podés usar auth()->id()
+            'user_id' => auth()->id(),
             'servicio_id' => $request->servicio_id,
-            'caja_id' => null
-        ]);
-
-        // ✅ Guardar historial inicial
-        Historial::create([
-            'turno_id' => $turno->id,
-            'estado' => 'pendiente',
-            'fecha_hora' => now()
+            'caja_id' => null, // ✅ NO se asigna acá
+            'nombre' => $request->nombre
         ]);
 
         return redirect()->route('turnos.index');
     }
 
-    public function show(Turno $turno)
-    {
-        return view('turnos.show', compact('turno'));
-    }
-
     public function edit(Turno $turno)
     {
         $servicios = Servicio::all();
-        $cajas = Caja::all();
-        return view('turnos.edit', compact('turno', 'servicios', 'cajas'));
+        return view('turnos.edit', compact('turno', 'servicios'));
     }
 
     public function update(Request $request, Turno $turno)
     {
-        $turno->update([
-            'estado' => $request->estado,
-            'caja_id' => $request->caja_id
-        ]);
+        // ✅ CASO 1: EDITAR TURNO
+        if ($request->has('nombre')) {
 
-        // ✅ Guardar historial
-        Historial::create([
-            'turno_id' => $turno->id,
-            'estado' => $request->estado,
-            'fecha_hora' => now()
-        ]);
+            $turno->update([
+                'nombre' => $request->nombre,
+                'servicio_id' => $request->servicio_id
+            ]);
+
+            return redirect()->route('turnos.index');
+        }
+
+        // ✅ BUSCAR CAJA DEL USUARIO (ACTIVA)
+        $caja = Caja::where('user_id', auth()->id())
+                    ->where('estado', 1)
+                    ->first();
+
+        if (!$caja) {
+            return redirect()->route('turnos.index')
+                ->with('error', 'No tienes una caja activa asignada');
+        }
+
+        // ✅ ATENDER
+        if ($request->estado === 'en_atencion') {
+
+            if ($turno->estado !== 'pendiente') {
+                return redirect()->route('turnos.index');
+            }
+
+            $turno->estado = 'en_atencion';
+            $turno->caja_id = $caja->id;
+        }
+
+        // ✅ FINALIZAR
+        elseif ($request->estado === 'atendido') {
+
+            if ($turno->caja_id != $caja->id) {
+                return redirect()->route('turnos.index')
+                    ->with('error', 'No puedes finalizar este turno');
+            }
+
+            $turno->estado = 'atendido';
+        }
+
+        $turno->save();
 
         return redirect()->route('turnos.index');
     }
@@ -86,7 +119,6 @@ class TurnoController extends Controller
         return redirect()->route('turnos.index');
     }
 
-
     public function pantalla()
     {
         $turno = Turno::where('estado', 'en_atencion')
@@ -95,5 +127,4 @@ class TurnoController extends Controller
 
         return view('turnos.pantalla', compact('turno'));
     }
-
 }

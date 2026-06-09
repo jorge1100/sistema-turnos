@@ -2,42 +2,68 @@
 
 @section('content')
 
-<h1>Servicios</h1>
+<div class="card">
 
-<a href="{{ route('servicios.create') }}">
-    Nuevo Servicio
-</a>
+    <h1 style="font-size:28px; margin-bottom:20px;">
+        Lista de Servicios
+    </h1>
 
-<br><br>
+    <table>
 
-<table border="1" cellpadding="8">
-    <tr>
-        <th>Nombre</th>
-        <th>Descripción</th>
-        <th>Acciones</th>
-    </tr>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
 
-    @foreach($servicios as $servicio)
-    <tr>
-        <td>{{ $servicio->nombre }}</td>
-        <td>{{ $servicio->descripcion }}</td>
-        <td>
+        <tbody>
 
-            <!-- Editar -->
-            <a href="{{ route('servicios.edit', $servicio) }}">
-                Editar
-            </a>
+            @foreach($servicios as $servicio)
 
-            <!-- Eliminar -->
-            <form action="{{ route('servicios.destroy', $servicio) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Eliminar</button>
-            </form>
+            <tr>
 
-        </td>
-    </tr>
-    @endforeach
-</table>
+                <td><strong>{{ $servicio->id }}</strong></td>
+
+                <td>{{ $servicio->nombre }}</td>
+
+                <td>
+
+                    <!-- EDITAR -->
+                    <a href="{{ route('servicios.edit', $servicio->id) }}">
+                        <button class="btn btn-edit">Editar</button>
+                    </a>
+
+                    <!-- ELIMINAR -->
+                    <form action="{{ route('servicios.destroy', $servicio->id) }}" method="POST"
+                          style="display:inline;"
+                          onsubmit="return confirm('¿Eliminar este servicio?')">
+                        @csrf
+                        @method('DELETE')
+
+                        <button class="btn btn-delete">Eliminar</button>
+                    </form>
+
+                </td>
+
+            </tr>
+
+            @endforeach
+
+        </tbody>
+
+    </table>
+
+    <!-- BOTÓN NUEVO -->
+    <div style="margin-top:20px;">
+        <a href="{{ route('servicios.create') }}">
+            <button class="btn btn-atender">
+                + Nuevo Servicio
+            </button>
+        </a>
+    </div>
+
+</div>
 
 @endsection

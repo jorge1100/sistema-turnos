@@ -2,95 +2,104 @@
 
 @section('content')
 
-<h1>Lista de Turnos</h1>
+<div class="card">
 
-<a href="{{ route('turnos.create') }}">
-    <button>Nuevo Turno</button>
-</a>
+    <h1 style="font-size:28px; margin-bottom:20px;">
+        Lista de Turnos
+    </h1>
 
-<br><br>
+    <table>
 
-<table border="1" cellpadding="8">
-    <tr>
-        <th>Número</th>
-        <th>Servicio</th>
-        <th>Caja</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-    </tr>
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Nombre</th>
+                <th>Servicio</th>
+                <th>Caja</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
 
-    @foreach($turnos as $turno)
-    <tr>
+        <tbody>
 
-        <!-- Número -->
-        <td>{{ $turno->numero }}</td>
+            @foreach($turnos as $turno)
 
-        <!-- Servicio -->
-        <td>
-            {{ $turno->servicio->nombre ?? 'Sin servicio' }}
-        </td>
+            <tr>
 
-        <!-- Caja -->
-        <td>
-            {{ $turno->caja->nombre ?? 'Sin asignar' }}
-        </td>
+                <td><strong>{{ $turno->numero }}</strong></td>
 
-        <!-- Estado con color -->
-        <td>
-            @if($turno->estado == 'pendiente')
-                <span style="color: orange; font-weight: bold;">Pendiente</span>
-            @elseif($turno->estado == 'en_atencion')
-                <span style="color: blue; font-weight: bold;">En Atención</span>
-            @elseif($turno->estado == 'atendido')
-                <span style="color: green; font-weight: bold;">Atendido</span>
-            @elseif($turno->estado == 'cancelado')
-                <span style="color: red; font-weight: bold;">Cancelado</span>
-            @endif
-        </td>
+                <td>{{ $turno->nombre }}</td>
 
-        <!-- Acciones -->
-        <td>
+                <td>{{ $turno->servicio->nombre ?? '-' }}</td>
 
-            <!-- ATENDER -->
-            <form action="{{ route('turnos.update', $turno) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('PUT')
+                <td>{{ $turno->caja->nombre ?? 'Sin asignar' }}</td>
 
-                <input type="hidden" name="estado" value="en_atencion">
-                <input type="hidden" name="caja_id" value="1">
+                <td>
+                    @if($turno->estado == 'pendiente')
+                        <span style="background:#fef3c7; padding:5px 10px; border-radius:5px;">
+                            Pendiente
+                        </span>
+                    @elseif($turno->estado == 'en_atencion')
+                        <span style="background:#d1fae5; padding:5px 10px; border-radius:5px;">
+                            En atención
+                        </span>
+                    @else
+                        <span style="background:#bbf7d0; padding:5px 10px; border-radius:5px;">
+                            Finalizado ✅
+                        </span>
+                    @endif
+                </td>
 
-                <button type="submit">Atender</button>
-            </form>
+                <td>
 
-            <!-- FINALIZAR -->
-            <form action="{{ route('turnos.update', $turno) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('PUT')
+                    <!-- EDITAR -->
+                    <a href="{{ route('turnos.edit', $turno->id) }}">
+                        <button class="btn btn-edit">Editar</button>
+                    </a>
 
-                <input type="hidden" name="estado" value="atendido">
-                <input type="hidden" name="caja_id" value="{{ $turno->caja_id }}">
+                    <!-- ATENDER -->
+                    <form action="{{ route('turnos.update', $turno->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="estado" value="en_atencion">
+                        <button class="btn btn-atender">Atender</button>
+                    </form>
 
-                <button type="submit">Finalizar</button>
-            </form>
+                    <!-- FINALIZAR -->
+                    <form action="{{ route('turnos.update', $turno->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="estado" value="atendido">
+                        <button class="btn btn-finalizar">Finalizar</button>
+                    </form>
 
-            <br><br>
+                    <!-- ELIMINAR -->
+                    <form action="{{ route('turnos.destroy', $turno->id) }}" method="POST" style="display:inline;"
+                          onsubmit="return confirm('¿Eliminar este turno?')">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-delete">Eliminar</button>
+                    </form>
 
-            <!-- EDITAR -->
-            <a href="{{ route('turnos.edit', $turno) }}">
-                <button>Editar</button>
-            </a>
+                </td>
 
-            <!-- ELIMINAR -->
-            <form action="{{ route('turnos.destroy', $turno) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Eliminar</button>
-            </form>
+            </tr>
 
-        </td>
+            @endforeach
 
-    </tr>
-    @endforeach
-</table>
+        </tbody>
+
+    </table>
+
+    <div style="margin-top:20px;">
+        <a href="{{ route('turnos.create') }}">
+            <button class="btn btn-atender">
+                + Nuevo Turno
+            </button>
+        </a>
+    </div>
+
+</div>
 
 @endsection

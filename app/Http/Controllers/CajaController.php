@@ -9,7 +9,7 @@ class CajaController extends Controller
 {
     public function index()
     {
-        $cajas = Caja::all();
+        $cajas = Caja::with('user')->get();
         return view('cajas.index', compact('cajas'));
     }
 
@@ -26,7 +26,8 @@ class CajaController extends Controller
 
         Caja::create([
             'nombre' => $request->nombre,
-            'estado' => true
+            'estado' => $request->estado ?? 1,
+            'user_id' => auth()->id() // ✅ ✅ CLAVE
         ]);
 
         return redirect()->route('cajas.index');
@@ -39,7 +40,15 @@ class CajaController extends Controller
 
     public function update(Request $request, Caja $caja)
     {
-        $caja->update($request->all());
+        $request->validate([
+            'nombre' => 'required'
+        ]);
+
+        $caja->update([
+            'nombre' => $request->nombre,
+            'estado' => $request->estado
+        ]);
+
         return redirect()->route('cajas.index');
     }
 

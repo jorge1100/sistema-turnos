@@ -15,7 +15,8 @@ class Turno extends Model
         'estado',
         'user_id',
         'servicio_id',
-        'caja_id'
+        'caja_id',
+        'nombre'
     ];
 
     public function servicio()

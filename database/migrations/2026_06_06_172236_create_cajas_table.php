@@ -12,9 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cajas', function (Blueprint $table) {
+
             $table->id();
+
             $table->string('nombre');
             $table->boolean('estado')->default(true);
+
+            // ✅ ESTA ES LA CLAVE
+            $table->foreignId('user_id')
+                  ->nullable()
+                  ->constrained()
+                  ->nullOnDelete();
+
             $table->timestamps();
         });
     }

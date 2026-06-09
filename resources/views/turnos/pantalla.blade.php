@@ -1,25 +1,62 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pantalla de Turnos</title>
-    <meta http-equiv="refresh" content="3">
+    <title>Pantalla</title>
+
+    <meta http-equiv="refresh" content="5">
+
+    <style>
+        body {
+            background: black;
+            color: white;
+            text-align: center;
+            font-family: Arial;
+        }
+
+        .turno {
+            font-size: 150px;
+            color: yellow;
+            animation: blink 1s infinite;
+        }
+
+        .nombre {
+            font-size: 60px;
+            color: cyan;
+        }
+
+        .info {
+            font-size: 40px;
+        }
+
+        @keyframes blink {
+            0%{opacity:1;}
+            50%{opacity:0.3;}
+            100%{opacity:1;}
+        }
+    </style>
+
 </head>
 
-<body style="text-align:center; font-family: Arial;">
+<body>
 
-    <h1 style="font-size:50px;">TURNO EN ATENCIÓN</h1>
+<h1>Turno en Atención</h1>
 
-    @if($turno)
-        <h2 style="font-size:100px; color:blue;">
-            {{ $turno->numero }}
-        </h2>
+@if($turno)
 
-        <h3 style="font-size:50px;">
-            {{ $turno->caja->nombre ?? 'Sin caja' }}
-        </h3>
-    @else
-        <h2>No hay turnos en atención</h2>
-    @endif
+    <div class="turno">{{ $turno->numero }}</div>
+    <h1>Nombre Pasiente</h1>
+    <div class="nombre">{{ $turno->nombre }}</div>
+    <!--
+    <div class="info">
+        Caja: {{ $turno->caja->nombre ?? '-' }}
+    </div>
+    -->
+@else
+
+    <h2>No hay turnos</h2>
+
+@endif
 
 </body>
 </html>
