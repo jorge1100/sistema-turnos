@@ -34,9 +34,21 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('clientes', ClienteController::class)->except(['show']);
 
     // TURNOS (SIN SHOW PARA EVITAR ERROR)
-    Route::resource('turnos', TurnoController::class)->except(['show']);
+    Route::resource('turnos', TurnoController::class);
 
     Route::resource('cajas', CajaController::class)->except(['show']);
+
+    Route::patch('/turnos/{turno}/atender', [TurnoController::class, 'atender'])->name('turnos.atender');
+    
+    Route::patch('/turnos/{turno}/finalizar', [TurnoController::class, 'finalizar'])->name('turnos.finalizar');
+
+    Route::view('/nosotros', 'nosotros.index')->name('nosotros');
+    
+    Route::view('/cv/jorge', 'cv.jorge')->name('cv.jorge');
+    
+    Route::view('/cv/jonathan', 'cv.jonathan')->name('cv.jonathan');
+    
+    Route::view('/cv/cristian', 'cv.cristian')->name('cv.cristian');
 
     });
 

@@ -9,34 +9,29 @@ use Illuminate\Http\Request;
 
 class TurnoController extends Controller
 {
-    // LISTAR TURNOS
     public function index()
     {
-        $turnos = Turno::with('cliente', 'caja')
-                        ->orderBy('id', 'desc')
-                        ->get();
-
+        $turnos = Turno::with('cliente','caja')->latest()->get();
         return view('turnos.index', compact('turnos'));
     }
 
-    // FORM CREAR
-    public function create()
+    public function create(Request $request)
     {
-        $clientes = Cliente::all();
-        $cajas = Caja::all();
+        if (\App\Models\Cliente::count() == 0) {
+            return redirect()->route('clientes.create')
+                ->with('mensaje', 'Primero debés crear un cliente');
+        }
 
-        return view('turnos.create', compact('clientes', 'cajas'));
+        $clientes = \App\Models\Cliente::all();
+        $cajas = \App\Models\Caja::all();
+
+        $clienteSeleccionado = $request->cliente_id;
+
+        return view('turnos.create', compact('clientes','cajas','clienteSeleccionado'));
     }
-
-    // GUARDAR
+    
     public function store(Request $request)
     {
-        $request->validate([
-            'cliente_id' => 'required|exists:clientes,id',
-            'caja_id' => 'required|exists:cajas,id',
-        ]);
-
-        // número automático
         $ultimo = Turno::max('numero');
         $numero = $ultimo ? $ultimo + 1 : 1;
 
@@ -52,57 +47,55 @@ class TurnoController extends Controller
             ->with('success', '✅ Turno creado correctamente');
     }
 
-    // MOSTRAR (EVITA ERROR)
-    public function show(Turno $turno)
+    public function edit(Turno $turno)
     {
+        return view('turnos.edit', compact('turno'));
+    }
+
+    public function update(Request $request, Turno $turno)
+    {
+        $turno->update([
+            'estado' => $request->estado
+        ]);
+
         return redirect()->route('turnos.index');
     }
 
-    // FORM EDITAR
-    public function edit(Turno $turno)
-    {
-        $clientes = Cliente::all();
-        $cajas = Caja::all();
-
-        return view('turnos.edit', compact('turno', 'clientes', 'cajas'));
-    }
-
-    // ACTUALIZAR
-    public function update(Request $request, Turno $turno)
-    {
-        $request->validate([
-            'cliente_id' => 'required|exists:clientes,id',
-            'caja_id' => 'required|exists:cajas,id',
-            'estado' => 'required|in:esperando,atendiendo,finalizado',
-        ]);
-
-        $turno->update([
-            'cliente_id' => $request->cliente_id,
-            'caja_id' => $request->caja_id,
-            'estado' => $request->estado,
-        ]);
-
-        return redirect()->route('turnos.index')
-            ->with('success', '✏️ Turno actualizado correctamente');
-    }
-
-    // ELIMINAR
     public function destroy(Turno $turno)
     {
         $turno->delete();
-
-        return redirect()->route('turnos.index')
-            ->with('success', '❌ Turno eliminado correctamente');
+        return redirect()->route('turnos.index');
     }
 
-    // PANTALLA EN VIVO
+    public function atender(Turno $turno)
+    {
+        $turno->update([
+            'estado' => 'atendiendo'
+        ]);
+
+        return back();
+    }
+
+    public function finalizar(Turno $turno)
+    {
+        $turno->update([
+            'estado' => 'finalizado'
+        ]);
+
+        return back();
+    }
+
     public function pantalla()
     {
-        $turnos = Turno::with('caja')
-            ->where('estado', '!=', 'finalizado')
-            ->orderBy('numero', 'asc')
+        $actual = Turno::where('estado', 'atendiendo')
+            ->latest()
+            ->first();
+
+        $historial = Turno::where('estado', 'atendiendo')
+            ->orderByDesc('updated_at')
+            ->take(4)
             ->get();
 
-        return view('turnos.pantalla', compact('turnos'));
+        return view('turnos.pantalla', compact('actual', 'historial'));
     }
 }

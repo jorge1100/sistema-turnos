@@ -7,11 +7,18 @@ use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
-    public function index()
+    
+    public function index(Request $request)
     {
-        $clientes = Cliente::all();
-        return view('clientes.index', compact('clientes'));
+        $buscar = $request->input('buscar');
+
+        $clientes = Cliente::when($buscar, function ($query) use ($buscar) {
+            $query->where('nombre', 'like', "%$buscar%");
+        })->get();
+
+        return view('clientes.index', compact('clientes', 'buscar'));
     }
+
 
     public function create()
     {

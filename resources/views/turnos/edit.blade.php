@@ -1,52 +1,36 @@
 <x-app-layout>
-    <div class="max-w-xl mx-auto p-6">
 
-        <h1 class="text-2xl font-bold mb-6">
-            Editar Turno
-        </h1>
+<div class="min-h-screen bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-700 flex items-start justify-center pt-16">
 
-        <form action="{{ route('turnos.update', $turno) }}" method="POST" class="bg-white p-6 rounded shadow">
+    <div class="bg-white/10 p-8 rounded-xl w-full max-w-md text-white">
+
+        <h2 class="text-2xl font-bold mb-6">Editar Turno</h2>
+
+        <form method="POST" action="{{ route('turnos.update',$turno) }}">
             @csrf
             @method('PUT')
 
-            <div class="mb-4">
-                <label class="block mb-1">Cliente</label>
-                <select name="cliente_id" class="w-full border p-2 rounded">
-                    @foreach($clientes as $cliente)
-                        <option value="{{ $cliente->id }}"
-                            {{ $cliente->id == $turno->cliente_id ? 'selected' : '' }}>
-                            {{ $cliente->nombre }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+            <select name="estado" class="w-full mb-4 p-3 rounded bg-white/20">
+                <option value="esperando">Esperando</option>
+                <option value="atendiendo">Atendiendo</option>
+                <option value="finalizado">Finalizado</option>
+            </select>
 
-            <div class="mb-4">
-                <label class="block mb-1">Caja</label>
-                <select name="caja_id" class="w-full border p-2 rounded">
-                    @foreach($cajas as $caja)
-                        <option value="{{ $caja->id }}"
-                            {{ $caja->id == $turno->caja_id ? 'selected' : '' }}>
-                            {{ $caja->nombre }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+            <div class="flex gap-3">
 
-            <div class="mb-4">
-                <label class="block mb-1">Estado</label>
-                <select name="estado" class="w-full border p-2 rounded">
-                    <option value="esperando" {{ $turno->estado=='esperando'?'selected':'' }}>Esperando</option>
-                    <option value="atendiendo" {{ $turno->estado=='atendiendo'?'selected':'' }}>Atendiendo</option>
-                    <option value="finalizado" {{ $turno->estado=='finalizado'?'selected':'' }}>Finalizado</option>
-                </select>
-            </div>
+                <button class="w-full bg-blue-500 py-2 rounded">Actualizar</button>
 
-            <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
-                Actualizar
-            </button>
+                <a href="{{ route('turnos.index') }}"
+                   class="w-full bg-gray-500 text-center py-2 rounded">
+                    Volver
+                </a>
+
+            </div>
 
         </form>
 
     </div>
+
+</div>
+
 </x-app-layout>

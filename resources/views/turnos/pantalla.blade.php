@@ -2,86 +2,77 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Euforia Boutique</title>
+    <title>Pantalla de Turnos</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- AUTO REFRESH -->
+    <meta http-equiv="refresh" content="5">
 </head>
 
-<body class="bg-white text-gray-900">
+<body class="min-h-screen 
+             bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-700 
+             text-white flex flex-col items-center">
 
-    <!-- HEADER -->
-    <div class="bg-black text-white py-6 text-center">
-        <h1 class="text-4xl font-bold tracking-widest">
-            EUFORIA BOUTIQUE
-        </h1>
-        <p class="text-sm mt-1">Sistema de atención</p>
+    <!-- TITULO -->
+    <h1 class="text-4xl font-bold mt-8 mb-6">
+        ✨ Turno en Atención
+    </h1>
+
+    <!-- TURNO CENTRAL -->
+    <div class="bg-white/10 backdrop-blur-md p-10 rounded-xl shadow-xl text-center mb-10 w-2/3">
+
+        @if($actual)
+            <!-- CAJA -->
+            <p class="text-xl text-white/70">
+                {{ $actual->caja->nombre }}
+            </p>
+
+            <!-- NUMERO -->
+            <p class="text-8xl font-bold my-4">
+                {{ $actual->numero }}
+            </p>
+
+            <!-- CLIENTE -->
+            <p class="text-2xl text-pink-200">
+                {{ $actual->cliente->nombre }}
+            </p>
+        @else
+            <p class="text-3xl">
+                No hay turnos en atención
+            </p>
+        @endif
+
     </div>
 
-    <!-- TURNO ACTUAL -->
-    <div class="flex justify-center mt-10">
+    <!-- HISTORIAL -->
+    <h2 class="text-2xl font-bold mb-4">
+        Cajas atendiendo
+    </h2>
 
-        <div class="bg-pink-500 text-white px-20 py-10 rounded-2xl shadow-xl text-center">
+    <div class="grid grid-cols-2 gap-6 w-full max-w-4xl px-6">
 
-            @if(count($turnos) > 0)
-                @php $actual = $turnos->first(); @endphp
+        @foreach($historial as $turno)
+        <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl text-center">
 
-                <p class="text-lg mb-2">Turno actual</p>
+            <!-- TEXTO -->
+            <p class="text-sm text-white/60">
+                Caja atendiendo
+            </p>
 
-                <h2 class="text-8xl font-bold">
-                    {{ $actual->numero }}
-                </h2>
+            <!-- CAJA -->
+            <p class="text-lg text-pink-200">
+                {{ $turno->caja->nombre }}
+            </p>
 
-                <p class="text-2xl mt-3">
-                    Caja {{ $actual->caja->nombre }}
-                </p>
-            @else
-                <p>No hay turnos</p>
-            @endif
+            <!-- NUMERO -->
+            <p class="text-4xl font-bold mt-2">
+                {{ $turno->numero }}
+            </p>
 
         </div>
-
-    </div>
-
-    <!-- LISTA TURNOS -->
-    <div class="max-w-6xl mx-auto mt-12 grid grid-cols-4 gap-6 px-6">
-
-        @foreach($turnos as $turno)
-            <div class="bg-gray-100 rounded-xl p-6 text-center shadow">
-
-                <div class="text-3xl font-bold text-pink-600">
-                    {{ $turno->numero }}
-                </div>
-
-                <div class="mt-2 text-gray-700">
-                    Caja {{ $turno->caja->nombre }}
-                </div>
-
-                <div class="mt-2 text-sm">
-                    @if($turno->estado == 'esperando')
-                        <span class="text-yellow-500 font-semibold">
-                            Esperando
-                        </span>
-                    @elseif($turno->estado == 'atendiendo')
-                        <span class="text-blue-600 font-semibold">
-                            Atendiendo
-                        </span>
-                    @else
-                        <span class="text-green-600 font-semibold">
-                            Finalizado
-                        </span>
-                    @endif
-                </div>
-
-            </div>
         @endforeach
 
     </div>
-
-    <!-- REFRESH -->
-    <script>
-        setInterval(() => {
-            location.reload();
-        }, 4000);
-    </script>
 
 </body>
 </html>

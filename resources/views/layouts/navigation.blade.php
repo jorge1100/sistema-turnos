@@ -8,31 +8,32 @@
                 ✨ Euforia Boutique
             </a>
 
-            <!-- MENÚ -->
+            <!-- MENÚ DESKTOP -->
             <div class="hidden sm:flex space-x-6">
 
-                <a href="{{ route('dashboard') }}"
-                   class="text-gray-300 hover:text-pink-400">
+                <a href="{{ route('dashboard') }}" class="text-gray-300 hover:text-pink-400">
                     Inicio
                 </a>
 
-                <a href="{{ route('clientes.index') }}"
-                   class="text-gray-300 hover:text-pink-400">
+                <a href="{{ route('clientes.index') }}" class="text-gray-300 hover:text-pink-400">
                     Clientes
                 </a>
 
-                <a href="{{ route('cajas.index') }}"
-                   class="text-gray-300 hover:text-pink-400">
+                <a href="{{ route('cajas.index') }}" class="text-gray-300 hover:text-pink-400">
                     Cajas
                 </a>
 
-                <a href="{{ route('turnos.index') }}"
-                   class="text-gray-300 hover:text-pink-400">
+                <a href="{{ route('turnos.index') }}" class="text-gray-300 hover:text-pink-400">
                     Turnos
                 </a>
 
-                <a href="{{ route('turnos.pantalla') }}"
-                   class="text-gray-300 hover:text-pink-400">
+                <!-- ✅ PRIMERO -->
+                <a href="{{ route('nosotros') }}" class="text-gray-300 hover:text-pink-400">
+                    Nosotros
+                </a>
+
+                <!-- ✅ DESPUÉS -->
+                <a href="{{ route('turnos.pantalla') }}" class="text-gray-300 hover:text-pink-400">
                     Pantalla
                 </a>
 
@@ -57,7 +58,7 @@
             <!-- BOTÓN MOBILE -->
             <div class="sm:hidden flex items-center">
                 <button @click="open = ! open"
-                    class="text-gray-300 hover:text-white focus:outline-none">
+                        class="text-gray-300 hover:text-white focus:outline-none">
 
                     <svg xmlns="http://www.w3.org/2000/svg"
                          class="h-6 w-6"
@@ -75,7 +76,7 @@
         </div>
     </div>
 
-    <!-- MOBILE MENU -->
+    <!-- MENU MOBILE -->
     <div x-show="open" class="sm:hidden bg-black border-t border-gray-700">
 
         <div class="px-4 py-3 space-y-2">
@@ -96,6 +97,12 @@
                 Turnos
             </a>
 
+            <!-- ✅ PRIMERO -->
+            <a href="{{ route('nosotros') }}" class="block text-gray-300 hover:text-pink-400">
+                Nosotros
+            </a>
+
+            <!-- ✅ DESPUÉS -->
             <a href="{{ route('turnos.pantalla') }}" class="block text-gray-300 hover:text-pink-400">
                 Pantalla
             </a>
@@ -114,6 +121,8 @@
             </form>
 
         </div>
+
     </div>
 
 </nav>
+
