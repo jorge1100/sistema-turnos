@@ -82,8 +82,8 @@
                                     </form>
 
                                     <!-- DAR TURNO -->
-                                    <a href="{{ route('turnos.create', ['cliente_id' => $cliente->id]) }}"
-                                       class="bg-green-500 hover:bg-green-600 px-3 py-1 rounded text-white text-center">
+                                    <a href="/turnos/create/{{ $cliente->id }}"
+                                    class="bg-green-500 hover:bg-green-600 px-3 py-1 rounded text-white text-center">
                                         Dar Turno
                                     </a>
 

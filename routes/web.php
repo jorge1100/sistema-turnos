@@ -50,6 +50,9 @@ Route::middleware(['auth'])->group(function () {
     
     Route::view('/cv/cristian', 'cv.cristian')->name('cv.cristian');
 
+    Route::get('/turnos/create/{cliente_id}', [TurnoController::class, 'create'])
+        ->name('turnos.create.fromCliente');
+
     });
 
 // PANTALLA PUBLICA (sin login)

@@ -14,22 +14,21 @@ class TurnoController extends Controller
         $turnos = Turno::with('cliente','caja')->latest()->get();
         return view('turnos.index', compact('turnos'));
     }
-
-    public function create(Request $request)
+  
+    public function create($cliente_id = null)
     {
-        if (\App\Models\Cliente::count() == 0) {
-            return redirect()->route('clientes.create')
-                ->with('mensaje', 'Primero debés crear un cliente');
-        }
+        $clientes = Cliente::all();
+        $cajas = Caja::all();
 
-        $clientes = \App\Models\Cliente::all();
-        $cajas = \App\Models\Caja::all();
+        $clienteSeleccionado = $cliente_id;
 
-        $clienteSeleccionado = $request->cliente_id;
-
-        return view('turnos.create', compact('clientes','cajas','clienteSeleccionado'));
+        return view('turnos.create', compact(
+            'clientes',
+            'cajas',
+            'clienteSeleccionado'
+        ));
     }
-    
+
     public function store(Request $request)
     {
         $ultimo = Turno::max('numero');

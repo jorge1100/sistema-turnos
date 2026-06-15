@@ -4,7 +4,7 @@
             bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-700 
             flex items-start justify-center pt-16 px-4">
 
-    <div class="bg-white/10 backdrop-blur-md 
+    <div class="bg-white/20 backdrop-blur-md 
                 p-6 rounded-xl 
                 w-full max-w-md text-white shadow-lg">
 
@@ -12,23 +12,23 @@
             Nuevo Turno
         </h2>
 
-        <!-- ✅ CLIENTE SELECCIONADO (MEJORADO) -->
-        @if(isset($clienteSeleccionado))
-            @php
-                $clienteActual = $clientes->firstWhere('id', $clienteSeleccionado);
-            @endphp
+        @php
+            $clienteActual = isset($clienteSeleccionado) 
+                ? $clientes->firstWhere('id', $clienteSeleccionado) 
+                : null;
+        @endphp
 
-            @if($clienteActual)
-            <div class="mb-4 bg-white/10 border border-white/30 p-3 rounded-lg text-center backdrop-blur-md">
-                <span class="text-white/70">Cliente seleccionado:</span>
-                <div class="text-lg font-bold text-pink-300">
-                    {{ $clienteActual->nombre }}
-                </div>
+        <!-- INFO CLIENTE -->
+        @if($clienteActual)
+        <div class="mb-4 bg-white/20 border border-white/30 p-3 rounded-lg text-center backdrop-blur-md">
+            <span class="text-white/70">Cliente seleccionado:</span>
+            <div class="text-lg font-bold text-pink-200">
+                {{ $clienteActual->nombre }}
             </div>
-            @endif
+        </div>
         @endif
 
-        <!-- BOTON CREAR CLIENTE -->
+        <!-- BOTÓN -->
         <div class="mb-4 text-center">
             <a href="{{ route('clientes.create') }}"
                class="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-lg text-white font-bold">
@@ -38,60 +38,88 @@
 
         <!-- FORM -->
         <form method="POST" action="{{ route('turnos.store') }}">
-            @csrf
+        @csrf
 
-            <!-- CLIENTE -->
-            <div class="mb-4">
-                <label class="text-white/80">Cliente</label>
+        <!-- ✅ CLIENTE -->
+        <div class="mb-4 relative" 
+             x-data="{
+                open:false,
+                selected:'{{ $clienteActual->nombre ?? 'Seleccionar cliente' }}',
+                value:'{{ $clienteSeleccionado ?? '' }}'
+             }"
+             @click.outside="open=false">
 
-                <select name="cliente_id"
-                        class="w-full p-3 rounded-lg bg-white/20 text-white 
-                               border border-white/20 outline-none
-                               focus:ring-2 focus:ring-pink-400 appearance-none">
+            <label class="text-white/80">Cliente</label>
 
-                    @foreach($clientes as $cliente)
-                        <option value="{{ $cliente->id }}"
-                            {{ (isset($clienteSeleccionado) && $clienteSeleccionado == $cliente->id) ? 'selected' : '' }}
-                            class="text-black">
-                            {{ $cliente->nombre }}
-                        </option>
-                    @endforeach
+            <input type="hidden" name="cliente_id" :value="value">
 
-                </select>
+            <!-- INPUT -->
+            <div @click="open=!open"
+                 class="w-full p-3 rounded-lg bg-white/20 border border-white/30 backdrop-blur-md cursor-pointer text-black">
+                <span x-text="selected"></span>
             </div>
 
-            <!-- CAJA -->
-            <div class="mb-4">
-                <label class="text-white/80">Caja</label>
+            <!-- DROPDOWN -->
+            <div x-show="open"
+                 class="absolute w-full mt-1 bg-white/20 backdrop-blur-md border border-white/30 rounded-lg z-50">
 
-                <select name="caja_id"
-                        class="w-full p-3 rounded-lg bg-white/20 text-white 
-                               border border-white/20 outline-none
-                               focus:ring-2 focus:ring-pink-400 appearance-none">
-
-                    @foreach($cajas as $caja)
-                        <option value="{{ $caja->id }}" class="text-black">
-                            {{ $caja->nombre }}
-                        </option>
-                    @endforeach
-
-                </select>
-            </div>
-
-            <!-- BOTONES -->
-            <div class="flex gap-3">
-
-                <button type="submit"
-                        class="w-full bg-blue-500 hover:bg-blue-600 py-2 rounded text-white font-bold">
-                    Guardar
-                </button>
-
-                <a href="{{ route('turnos.index') }}"
-                   class="w-full bg-gray-500 hover:bg-gray-600 text-center py-2 rounded text-white font-bold">
-                    Volver
-                </a>
+                @foreach($clientes as $cliente)
+                <div @click="selected='{{ $cliente->nombre }}'; value='{{ $cliente->id }}'; open=false"
+                     class="p-3 hover:bg-purple-700 cursor-pointer text-black">
+                    {{ $cliente->nombre }}
+                </div>
+                @endforeach
 
             </div>
+        </div>
+
+        <!-- ✅ CAJA -->
+        <div class="mb-4 relative" 
+             x-data="{
+                open:false,
+                selected:'Seleccionar caja',
+                value:''
+             }"
+             @click.outside="open=false">
+
+            <label class="text-white/80">Caja</label>
+
+            <input type="hidden" name="caja_id" :value="value">
+
+            <!-- INPUT -->
+            <div @click="open=!open"
+                 class="w-full p-3 rounded-lg bg-white/20 border border-white/30 backdrop-blur-md cursor-pointer text-black">
+                <span x-text="selected"></span>
+            </div>
+
+            <!-- DROPDOWN -->
+            <div x-show="open"
+                 class="absolute w-full mt-1 bg-white/20 backdrop-blur-md border border-white/30 rounded-lg z-50">
+
+                @foreach($cajas as $caja)
+                <div @click="selected='{{ $caja->nombre }}'; value='{{ $caja->id }}'; open=false"
+                     class="p-3 hover:bg-purple-700 cursor-pointer text-black">
+                    {{ $caja->nombre }}
+                </div>
+                @endforeach
+
+            </div>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="flex gap-3">
+
+            <button type="submit"
+                    class="w-full bg-blue-500 hover:bg-blue-600 py-2 rounded text-white font-bold">
+                Guardar
+            </button>
+
+            <a href="{{ route('turnos.index') }}"
+               class="w-full bg-gray-500 hover:bg-gray-600 text-center py-2 rounded text-white font-bold">
+                Volver
+            </a>
+
+        </div>
 
         </form>
 
