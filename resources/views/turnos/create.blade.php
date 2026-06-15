@@ -4,7 +4,7 @@
             bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-700 
             flex items-start justify-center pt-16 px-4">
 
-    <div class="bg-white/20 backdrop-blur-md 
+    <div class="bg-white/10 backdrop-blur-md 
                 p-6 rounded-xl 
                 w-full max-w-md text-white shadow-lg">
 
@@ -20,15 +20,15 @@
 
         <!-- INFO CLIENTE -->
         @if($clienteActual)
-        <div class="mb-4 bg-white/20 border border-white/30 p-3 rounded-lg text-center backdrop-blur-md">
+        <div class="mb-4 bg-white/10 border border-white/30 p-3 rounded-lg text-center backdrop-blur-md">
             <span class="text-white/70">Cliente seleccionado:</span>
-            <div class="text-lg font-bold text-pink-200">
+            <div class="text-lg font-bold text-pink-300">
                 {{ $clienteActual->nombre }}
             </div>
         </div>
         @endif
 
-        <!-- BOTÓN -->
+        <!-- BOTON -->
         <div class="mb-4 text-center">
             <a href="{{ route('clientes.create') }}"
                class="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-lg text-white font-bold">
@@ -41,7 +41,7 @@
         @csrf
 
         <!-- ✅ CLIENTE -->
-        <div class="mb-4 relative" 
+        <div class="mb-4" 
              x-data="{
                 open:false,
                 selected:'{{ $clienteActual->nombre ?? 'Seleccionar cliente' }}',
@@ -53,19 +53,17 @@
 
             <input type="hidden" name="cliente_id" :value="value">
 
-            <!-- INPUT -->
             <div @click="open=!open"
-                 class="w-full p-3 rounded-lg bg-white/20 border border-white/30 backdrop-blur-md cursor-pointer text-black">
+                 class="w-full p-3 rounded-lg bg-white/10 border border-white/30 backdrop-blur-md cursor-pointer text-black">
                 <span x-text="selected"></span>
             </div>
 
-            <!-- DROPDOWN -->
             <div x-show="open"
-                 class="absolute w-full mt-1 bg-white/20 backdrop-blur-md border border-white/30 rounded-lg z-50">
+                 class="absolute w-full mt-1 bg-white/10 backdrop-blur-md border border-white/30 rounded-lg z-50">
 
                 @foreach($clientes as $cliente)
                 <div @click="selected='{{ $cliente->nombre }}'; value='{{ $cliente->id }}'; open=false"
-                     class="p-3 hover:bg-purple-700 cursor-pointer text-black">
+                     class="p-3 hover:bg-purple-600 cursor-pointer text-black">
                     {{ $cliente->nombre }}
                 </div>
                 @endforeach
@@ -74,7 +72,7 @@
         </div>
 
         <!-- ✅ CAJA -->
-        <div class="mb-4 relative" 
+        <div class="mb-4" 
              x-data="{
                 open:false,
                 selected:'Seleccionar caja',
@@ -86,19 +84,17 @@
 
             <input type="hidden" name="caja_id" :value="value">
 
-            <!-- INPUT -->
             <div @click="open=!open"
-                 class="w-full p-3 rounded-lg bg-white/20 border border-white/30 backdrop-blur-md cursor-pointer text-black">
+                 class="w-full p-3 rounded-lg bg-white/10 border border-white/30 backdrop-blur-md cursor-pointer text-black">
                 <span x-text="selected"></span>
             </div>
 
-            <!-- DROPDOWN -->
             <div x-show="open"
-                 class="absolute w-full mt-1 bg-white/20 backdrop-blur-md border border-white/30 rounded-lg z-50">
+                 class="absolute w-full mt-1 bg-white/10 backdrop-blur-md border border-white/30 rounded-lg z-50">
 
                 @foreach($cajas as $caja)
                 <div @click="selected='{{ $caja->nombre }}'; value='{{ $caja->id }}'; open=false"
-                     class="p-3 hover:bg-purple-700 cursor-pointer text-black">
+                     class="p-3 hover:bg-purple-600 cursor-pointer text-black">
                     {{ $caja->nombre }}
                 </div>
                 @endforeach
