@@ -672,23 +672,23 @@ footer {
 <header>
   <div>
     <!-- <p class="header-tag">// curriculum vitae · 2026</p> -->
-    <h1 class="name">rojas<br>jorge</h1>
-    <p class="role">Full Stack Developer · 5 años de experiencia</p>
+    <h1 class="name">Jonathan Javier<br>Britez</h1>
+    <p class="role">Full Stack Developer · 2 años de experiencia</p>
 
     <div class="contact-pills">
       <a class="pill" href="mailto:tunombre@email.com">
         <span class="pill-dot"></span>
-        jorge.rojas.j.for@gmail.com
+        javiermixer02@gmail.com
       </a>
 
-      <a class="pill" href="https://github.com/jorge1100/" target="_blank">
+      <a class="pill" href="https://github.com/JonathanJa" target="_blank">
         <span class="pill-dot" style="background: var(--accent)"></span>
-        https://github.com/jorge1100/
+        https://github.com/JonathanJa/
       </a>
 
-      <a class="pill" href="https://www.linkedin.com/in/jorge-rojas-2138a591/" target="_blank">
+      <a class="pill" href="www.linkedin.com/in/jonathan-britez-7206501b7/" target="_blank">
         <span class="pill-dot" style="background: #0a66c2"></span>
-        https://www.linkedin.com/in/jorge-rojas-2138a591/
+        www.linkedin.com/in/jonathan-britez-7206501b7
       </a>
 
       <span class="pill">
@@ -702,7 +702,7 @@ footer {
   <div class="avatar-box">
     <div class="avatar">
 
-      <img src="/cv/jorge/f1.jpg" alt="Foto de perfil">
+      <img src="/cv/jonathan/f1.jpg" alt="Foto de perfil">
 
     </div>
 
@@ -717,10 +717,9 @@ footer {
     <section>
       <p class="section-label">sobre mí</p>
       <p class="about-text">
-        Desarrollador Full Stack apasionado por construir productos digitales escalables y de alto rendimiento.
-        Me especializo en arquitecturas modernas con laravel Node.js y bases de datos SQL/NoSQL.
-        Valoro el código limpio, la colaboración en equipo y la entrega continua de valor.
-        Busco proyectos desafiantes donde pueda crecer técnicamente y aportar soluciones reales.
+        Me gusta ser un Desarrollador experimentado Creando y corrigiendo problemas, en mis tiempos libres me paso practicando programacion leyendo libros o adentrandome a tutoriales con certificacion como IT, Udemy, Codigofacilito u otros.
+        Tengo conocimiento de varios lenguajes en la que me toca profundisar como Java, C# etx, y otros que me faltan por aprender un poco mas como crear aplicaciones moviles usando Flutter u otro lenguajes en la que mas me adapte. 
+        Poseo conocimiento de Testing automatizado tengo una certificación que demuestre lo mismos. 
       </p>
     </section>
 
@@ -733,7 +732,8 @@ footer {
           <div class="skill-tags">
             <span class="skill-tag">HTML5</span>
             <span class="skill-tag">CSS3</span>
-            <span class="skill-tag">jAVAScript</span>
+            <span class="skill-tag">JAVAScript</span>
+          
           </div>
         </div>
         <div class="skill-group">
@@ -741,8 +741,10 @@ footer {
           <div class="skill-tags">
             <span class="skill-tag">Node.js</span>
             <span class="skill-tag">laravel</span>
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">Django</span>
+              <span class="skill-tag">JAVA</span>
+            <span class="skill-tag">C#</span>
+            <span class="skill-tag">.NET</span>
+            <span class="skill-tag">visual Basic</span>
           </div>
         </div>
         <div class="skill-group">
@@ -751,6 +753,8 @@ footer {
             <span class="skill-tag">PostgreSQL</span>
             <span class="skill-tag">Mariadb</span>
             <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">MySQL Server</span>
+            <span class="skill-tag">SQLITE</span>
           </div>
         </div>
         <div class="skill-group">
@@ -766,74 +770,31 @@ footer {
     </section>
 
     <!-- EXPERIENCIA -->
-    <section>
-      <p class="section-label">experiencia</p>
-      <div class="timeline">
-        
-        <div class="job">
-          <div class="job-header">
-            <p class="job-title">Senior Full Stack Developer · <span class="job-company">Empresa Domo fusio</span></p>
-            <span class="job-period">2026 — presente</span>
-          </div>
-          <p class="job-desc">
-            <!-- Lideré el desarrollo de una plataforma SaaS B2B utilizada por más de 200 empresas.
-            Rediseñé la arquitectura del backend logrando una reducción del 40% en tiempos de respuesta.
-            Implementé CI/CD con GitHub Actions y gestioné deploys en AWS ECS. -->
-          </p>
-          <div class="job-tech">
-            <span class="tech-badge">Linux</span>
-            <span class="tech-badge">Mariadb</span>
-            <span class="tech-badge">Laravel</span>
-            <span class="tech-badge">Git</span>
-            <span class="tech-badge">Github</span>
-          </div>
-        </div>
-
-        <div class="job">
-          <div class="job-header">
-            <p class="job-title">Senior Full Stack Developer · <span class="job-company">Empresa Euforiaboutique</span></p>
-            <span class="job-period">2026 — presente</span>
-          </div>
-          <p class="job-desc">
-            <!-- Lideré el desarrollo de una plataforma SaaS B2B utilizada por más de 200 empresas.
-            Rediseñé la arquitectura del backend logrando una reducción del 40% en tiempos de respuesta.
-            Implementé CI/CD con GitHub Actions y gestioné deploys en AWS ECS. -->
-          </p>
-          <div class="job-tech">
-            <span class="tech-badge">Linux</span>
-            <span class="tech-badge">Mariadb</span>
-            <span class="tech-badge">Laravel</span>
-            <span class="tech-badge">Git</span>
-            <span class="tech-badge">Github</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
+   
 
     <!-- PROYECTOS -->
     <section>
-      <p class="section-label">proyectos destacados</p>
+      <p class="section-label">proyectos de prueba y Practica</p>
       <div class="projects-grid">
 
         <div class="project-card">
           <div class="project-icon">&lt;/&gt;</div>
-          <p class="project-name">DevTrack</p>
-          <p class="project-desc">Plataforma de gestión de proyectos con tableros Kanban en tiempo real y analíticas avanzadas para equipos de desarrollo.</p>
+          <p class="project-name">Manejo de Presupuesto</p>
+          <p class="project-desc">Proyecto que verifica ganancias y la cantidad a pagar.</p>
           <a class="project-link" href="#" onclick="return false;">ver proyecto →</a>
         </div>
 
         <div class="project-card">
           <div class="project-icon">&#9889;</div>
-          <p class="project-name">FastAPI Starter</p>
-          <p class="project-desc">Template open source para APIs REST con autenticación JWT, rate limiting y documentación automática. +400 estrellas en GitHub.</p>
+          <p class="project-name">Sitio Freelance</p>
+          <p class="project-desc">Pagina web Moderna creada con Intecion de Practica usando CSS y haciendole responsivo.</p>
           <a class="project-link" href="#" onclick="return false;">ver proyecto →</a>
         </div>
 
         <div class="project-card">
-          <div class="project-icon">&#128722;</div>
-          <p class="project-name">EcommerceKit</p>
-          <p class="project-desc">Solución e-commerce fullstack con integración de MercadoPago, gestión de inventario y dashboard de ventas en tiempo real.</p>
+          <div class="project-icon">&lt;/&gt;</div>
+          <p class="project-name">APP de Registro</p>
+          <p class="project-desc">Solución de registro de jugadores de futbol 5</p>
           <a class="project-link" href="#" onclick="return false;">ver proyecto →</a>
         </div>
 
@@ -850,6 +811,17 @@ footer {
           <p class="edu-inst">Universidad Tecnológica Nacional (UTN)</p>
         </div>
         <span class="edu-year">2025 — 2026</span>
+      </div>
+
+    </section>
+    <section>
+
+      <div class="edu-item">
+        <div>
+          <p class="edu-title">Tecnico Superior en Desarrollo de Software</p>
+          <p class="edu-inst">Instituto Superior Privado Fermosa</p>
+        </div>
+        <span class="edu-year">2022 — 2024</span>
       </div>
 
     </section>

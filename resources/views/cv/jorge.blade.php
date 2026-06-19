@@ -672,8 +672,8 @@ footer {
 <header>
   <div>
     <!-- <p class="header-tag">// curriculum vitae · 2026</p> -->
-    <h1 class="name">rojas<br>jorge</h1>
-    <p class="role">Full Stack Developer · 5 años de experiencia</p>
+    <h1 class="name">Rojas Jojot<br>Jorge Luis</h1>
+    <p class="role">Full Stack Developer · 2 años de experiencia</p>
 
     <div class="contact-pills">
       <a class="pill" href="mailto:tunombre@email.com">
