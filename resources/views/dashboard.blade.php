@@ -1,113 +1,157 @@
 <x-app-layout>
 
-<div class="min-h-screen 
-            bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-700 
-            p-6 pt-10">
+<div class="min-h-screen
+            bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-700
+            py-10 px-4">
 
-    <!-- BIENVENIDO -->
-    <div class="mb-8 text-white">
-        <h1 class="text-4xl font-bold">
-            Bienvenido, {{ Auth::user()->name }}
-        </h1>
+    <div class="max-w-6xl mx-auto">
 
-        <p class="text-white/80 mt-1">
-            Panel de gestión de Euforia Boutique
-        </p>
-    </div>
+        <!-- BIENVENIDA -->
+        <div class="mb-8 text-white">
+            <h1 class="text-3xl sm:text-4xl font-bold">
+                Bienvenido, {{ Auth::user()->name }}
+            </h1>
 
-    <!-- TARJETAS -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-
-        <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg">
-            <h2 class="text-white/80 text-sm">Clientes</h2>
-            <p class="text-3xl font-bold text-white">
-                {{ \App\Models\Cliente::count() }}
+            <p class="text-white/80 mt-2">
+                Panel de gestión de Euforia Boutique
             </p>
         </div>
 
-        <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg">
-            <h2 class="text-white/80 text-sm">Cajas</h2>
-            <p class="text-3xl font-bold text-white">
-                {{ \App\Models\Caja::count() }}
-            </p>
+        <!-- TARJETAS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+            <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg">
+                <h2 class="text-white/70 text-sm mb-2">
+                    Clientes
+                </h2>
+
+                <p class="text-3xl font-bold text-white">
+                    {{ \App\Models\Cliente::count() }}
+                </p>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg">
+                <h2 class="text-white/70 text-sm mb-2">
+                    Cajas
+                </h2>
+
+                <p class="text-3xl font-bold text-white">
+                    {{ \App\Models\Caja::count() }}
+                </p>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg">
+                <h2 class="text-white/70 text-sm mb-2">
+                    Turnos
+                </h2>
+
+                <p class="text-3xl font-bold text-white">
+                    {{ \App\Models\Turno::count() }}
+                </p>
+            </div>
+
         </div>
 
-        <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg">
-            <h2 class="text-white/80 text-sm">Turnos</h2>
-            <p class="text-3xl font-bold text-white">
-                {{ \App\Models\Turno::count() }}
-            </p>
+        <!-- ÚLTIMOS TURNOS -->
+        <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8">
+
+            <h2 class="text-xl font-bold text-white mb-4">
+                Últimos Turnos
+            </h2>
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full text-white text-sm sm:text-base">
+
+                    <thead class="border-b border-white/30">
+                        <tr>
+                            <th class="p-3 text-left">N°</th>
+                            <th class="p-3 text-left">Cliente</th>
+                            <th class="p-3 text-left">Caja</th>
+                            <th class="p-3 text-left">Estado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    @foreach(\App\Models\Turno::with('cliente','caja')->latest()->take(5)->get() as $turno)
+
+                        <tr class="border-b border-white/20 hover:bg-white/10">
+
+                            <td class="p-3 font-bold">
+                                {{ $turno->numero }}
+                            </td>
+
+                            <td class="p-3">
+                                {{ $turno->cliente->nombre }}
+                            </td>
+
+                            <td class="p-3">
+                                {{ $turno->caja->nombre }}
+                            </td>
+
+                            <td class="p-3">
+
+                                @if($turno->estado == 'esperando')
+                                    <span class="bg-yellow-500 px-3 py-1 rounded text-white text-sm">
+                                        Esperando
+                                    </span>
+
+                                @elseif($turno->estado == 'atendiendo')
+                                    <span class="bg-blue-500 px-3 py-1 rounded text-white text-sm">
+                                        En atención
+                                    </span>
+
+                                @else
+                                    <span class="bg-green-500 px-3 py-1 rounded text-white text-sm">
+                                        Finalizado
+                                    </span>
+                                @endif
+
+                            </td>
+
+                        </tr>
+
+                    @endforeach
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
         </div>
 
-    </div>
+        <!-- SISTEMA -->
+        <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 text-white">
 
-    <!-- TABLA -->
-    <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg mb-10">
+            <h2 class="text-2xl font-bold mb-3">
+                Sistema de Turnos
+            </h2>
 
-        <h2 class="text-xl font-bold text-white mb-4">
-            Últimos Turnos
-        </h2>
+            <p class="text-white/90">
+                Este sistema permite gestionar clientes, asignar turnos y organizar la atención
+                dentro de la boutique. Su objetivo es mejorar la experiencia del usuario y
+                optimizar el flujo de trabajo.
+            </p>
 
-        <table class="w-full text-left text-white">
-            <thead class="border-b border-white/30">
-                <tr>
-                    <th class="p-2">N°</th>
-                    <th class="p-2">Cliente</th>
-                    <th class="p-2">Caja</th>
-                    <th class="p-2">Estado</th>
-                </tr>
-            </thead>
+        </div>
 
-            <tbody>
-                @foreach(\App\Models\Turno::with('cliente','caja')->latest()->take(5)->get() as $turno)
-                <tr class="border-b border-white/20">
-                    <td class="p-2 font-bold">
-                        {{ $turno->numero }}
-                    </td>
-                    <td class="p-2">
-                        {{ $turno->cliente->nombre }}
-                    </td>
-                    <td class="p-2">
-                        {{ $turno->caja->nombre }}
-                    </td>
-                    <td class="p-2">
-                        {{ ucfirst($turno->estado) }}
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <!-- FUNCIONALIDADES -->
+        <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg text-white">
 
-    </div>
+            <h2 class="text-xl font-bold mb-4">
+                Funcionalidades del Sistema
+            </h2>
 
-    <!-- SISTEMA -->
-    <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg mb-6 text-white">
+            <ul class="space-y-3 text-white/90">
+                <li>✔ Gestión completa de clientes</li>
+                <li>✔ Administración de cajas</li>
+                <li>✔ Generación automática de turnos</li>
+                <li>✔ Visualización en pantalla en tiempo real</li>
+            </ul>
 
-        <h2 class="text-2xl font-bold mb-2">
-            Sistema de Turnos
-        </h2>
-
-        <p class="text-white/90 text-sm">
-            Este sistema permite gestionar clientes, asignar turnos y organizar la atención
-            dentro de la boutique. Su objetivo es mejorar la experiencia del usuario
-            y optimizar el flujo de trabajo.
-        </p>
-
-    </div>
-
-    <!-- MÁS CONTENIDO -->
-    <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg text-white">
-
-        <h2 class="text-xl font-bold mb-3">
-            Funcionalidades del Sistema
-        </h2>
-
-        <ul class="space-y-2 text-white/90 text-sm">
-            <li>✔ Gestión completa de clientes</li>
-            <li>✔ Administración de cajas</li>
-            <li>✔ Generación automática de turnos</li>
-            <li>✔ Visualización en pantalla en tiempo real</li>
-        </ul>
+        </div>
 
     </div>
 

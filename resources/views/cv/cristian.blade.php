@@ -672,21 +672,21 @@ footer {
 <header>
   <div>
     <!-- <p class="header-tag">// curriculum vitae · 2026</p> -->
-    <h1 class="name">rojas<br>jorge</h1>
+    <h1 class="name">Silvera<br>Cristian</h1>
     <p class="role">Full Stack Developer · 5 años de experiencia</p>
 
     <div class="contact-pills">
       <a class="pill" href="mailto:tunombre@email.com">
         <span class="pill-dot"></span>
-        jorge.rojas.j.for@gmail.com
+        rusosilvera018@gmail.com
       </a>
 
-      <a class="pill" href="https://github.com/jorge1100/" target="_blank">
+      <a class="pill" href="https://github.com/rusosilvera018-tech" target="_blank">
         <span class="pill-dot" style="background: var(--accent)"></span>
-        https://github.com/jorge1100/
+        https://github.com/rusosilvera018-tech
       </a>
 
-      <a class="pill" href="https://www.linkedin.com/in/jorge-rojas-2138a591/" target="_blank">
+      <a class="pill" href="https://www.linkedin.com/in/cristian-silvera-775635349/" target="_blank">
         <span class="pill-dot" style="background: #0a66c2"></span>
         https://www.linkedin.com/in/jorge-rojas-2138a591/
       </a>
@@ -702,7 +702,7 @@ footer {
   <div class="avatar-box">
     <div class="avatar">
 
-      <img src="/cv/jorge/f1.jpg" alt="Foto de perfil">
+      <img src="/cv/cristian/f1.jpg" alt="Foto de perfil">
 
     </div>
 
