@@ -6,6 +6,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\CajaController;
+use App\Http\Controllers\Api\ClienteApiController;
+use App\Http\Controllers\Api\TurnoApiController;
+
+
 // Importación de controladores que se usarán en las rutas
 
 // Página principal
@@ -77,3 +81,7 @@ Route::get('/pantalla', [TurnoController::class, 'pantalla'])
 // AUTENTICACIÓN (login/register)
 require __DIR__.'/auth.php';
 // Incluye las rutas de autenticación (login, registro, etc.)
+
+Route::get('/api/clientes', [ClienteApiController::class, 'index']);
+
+Route::post('/api/turnos', [TurnoApiController::class, 'store']);

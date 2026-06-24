@@ -35,6 +35,29 @@
     </h1>
     <!-- Título principal -->
 
+    <!-- RELOJ -->
+
+    <div class="mb-4">
+
+        <div class="bg-white/10
+                    backdrop-blur-md
+                    rounded-xl
+                    px-6 py-3
+                    shadow-lg
+                    text-center">
+
+            <div class="text-2xl font-bold">
+                🕒 {{ $hora }}
+            </div>
+
+            <div class="text-sm text-white/70">
+                {{ $fecha }}
+            </div>
+
+        </div>
+
+    </div>
+    
     <!-- TURNO CENTRAL -->
     <div class="bg-white/10 backdrop-blur-md p-10 rounded-xl shadow-xl text-center mb-10 w-2/3">
         <!-- 

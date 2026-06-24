@@ -6,6 +6,7 @@ use App\Models\Turno; // Modelo Turno
 use App\Models\Cliente; // Modelo Cliente
 use App\Models\Caja; // Modelo Caja
 use Illuminate\Http\Request; // Manejo de solicitudes HTTP
+use Illuminate\Support\Facades\Http;
 
 class TurnoController extends Controller
 {
@@ -111,21 +112,49 @@ class TurnoController extends Controller
         return back();
     }
 
-    public function pantalla()
+  public function pantalla()
     {
-        // Obtiene el turno actual que está siendo atendido
         $actual = Turno::where('estado', 'atendiendo')
-            ->latest() // el más reciente
+            ->latest()
             ->first();
 
-        // Obtiene los últimos 4 turnos en estado "atendiendo"
-        // ordenados por fecha de actualización descendente
         $historial = Turno::where('estado', 'atendiendo')
             ->orderByDesc('updated_at')
             ->take(4)
             ->get();
 
-        // Retorna la vista de pantalla mostrando turno actual e historial
-        return view('turnos.pantalla', compact('actual', 'historial'));
-    }
+        $hora = '--:--:--';
+        $fecha = '--/--/----';
+
+        try {
+
+            $response = Http::timeout(10)
+                ->get('https://timeapi.io/api/Time/current/zone?timeZone=America/Argentina/Buenos_Aires');
+
+            if ($response->successful()) {
+
+                $datos = $response->json();
+
+                $fechaHora = new \DateTime($datos['dateTime']);
+
+                $hora = $fechaHora->format('H:i:s');
+                $fecha = $fechaHora->format('d/m/Y');
+            }
+
+        } catch (\Exception $e) {
+
+            logger($e->getMessage());
+
+        }
+
+        return view(
+            'turnos.pantalla',
+            compact(
+                'actual',
+                'historial',
+                'hora',
+                'fecha'
+            )
+        );
+    } 
 }
