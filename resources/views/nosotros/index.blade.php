@@ -43,7 +43,7 @@
                 <h2 class="text-xl font-bold">Jorge Luis Rojas Jojot</h2>
                 <!-- Nombre -->
 
-                <p class="text-white/70 mb-4">Desarrollador Full Stack</p>
+                <p class="text-white/70 mb-4">Desarrollador</p>
                 <!-- Rol -->
 
                 <a href="{{ route('cv.jorge') }}" target="_blank"
@@ -57,7 +57,7 @@
             <!-- ✅ JONATHAN -->
             <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl text-center">
 
-                <h2 class="text-xl font-bold">Jonathan</h2>
+                <h2 class="text-xl font-bold">Jonathan Javier Britez</h2>
 
                 <p class="text-white/70 mb-4">Desarrollador</p>
 
@@ -71,7 +71,7 @@
             <!-- ✅ CRISTIAN -->
             <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl text-center">
 
-                <h2 class="text-xl font-bold">Cristian</h2>
+                <h2 class="text-xl font-bold">Silvera Cristian</h2>
 
                 <p class="text-white/70 mb-4">Desarrollador</p>
 
