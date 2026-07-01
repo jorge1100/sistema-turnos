@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Hace el sitio responsive -->
         <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- Token de seguridad para formularios -->
 
-        <title>{{ config('app.name', 'Laravel') }}</title> <!-- Nombre de la app desde config -->
+        <title>{{ config('app.name', 'Login') }}</title> <!-- Nombre de la app desde config -->
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net"> <!-- Optimiza la carga de fuentes -->

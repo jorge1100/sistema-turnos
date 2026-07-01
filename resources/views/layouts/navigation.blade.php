@@ -16,7 +16,6 @@
 
             <!-- MENÚ DESKTOP -->
             <div class="hidden sm:flex space-x-6">
-                <!-- hidden sm:flex → oculto en móvil, visible en pantallas grandes -->
 
                 <a href="{{ route('dashboard') }}" class="text-gray-300 hover:text-pink-400">
                     Inicio
@@ -36,6 +35,10 @@
 
                 <a href="{{ route('nosotros') }}" class="text-gray-300 hover:text-pink-400">
                     Nosotros
+                </a>
+
+                <a href="{{ route('contacto') }}" class="text-gray-300 hover:text-pink-400">
+                    Contacto
                 </a>
 
                 <a href="{{ route('turnos.pantalla') }}" class="text-gray-300 hover:text-pink-400">
@@ -156,6 +159,10 @@
 
             <a href="{{ route('nosotros') }}" class="block text-gray-300 hover:text-pink-400">
                 Nosotros
+            </a>
+
+            <a href="{{ route('contacto') }}" class="block text-gray-300 hover:text-pink-400">
+                Contacto
             </a>
 
             <a href="{{ route('turnos.pantalla') }}" class="block text-gray-300 hover:text-pink-400">

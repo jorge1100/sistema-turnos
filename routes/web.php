@@ -8,6 +8,8 @@ use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\CajaController;
 use App\Http\Controllers\Api\ClienteApiController;
 use App\Http\Controllers\Api\TurnoApiController;
+use App\Http\Controllers\ContactoController;
+
 
 
 // Importación de controladores que se usarán en las rutas
@@ -70,6 +72,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/turnos/create/{cliente_id}', [TurnoController::class, 'create'])
         ->name('turnos.create.fromCliente');
     // Permite entrar al formulario de turno con cliente preseleccionado
+    
+    Route::get('/contacto', [ContactoController::class, 'index'])
+        ->name('contacto');
+
+    Route::post('/contacto', [ContactoController::class, 'enviar'])
+        ->name('contacto.enviar');
+
 
 });
 
